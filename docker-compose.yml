@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  eos-app:
+    build: .
+    container_name: eos-app
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
